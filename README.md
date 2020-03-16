@@ -36,6 +36,13 @@ plugins:
     # Pushbullet Channel Tag to use for messages, may be left empty/null
     push_channel: some_tag
 
+    # message to send on action:pushbullet
+    actionTrigger:
+      enable: true
+
+      # title of the notification
+      title: 'Print notification'
+
     # message to send when a print is done
     # available placeholders:
     # - file: name of the file that was printed
