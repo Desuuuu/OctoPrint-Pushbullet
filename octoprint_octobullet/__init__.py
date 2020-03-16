@@ -184,6 +184,11 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 				title="Print job finished",
 				body="{file} finished printing in {elapsed_time}"
 			),
+			printPaused=dict(
+				enable=True,
+				title="Print job paused",
+				body="Paused printing {file}"
+			),
 			printProgress=dict(
 				enable=False,
 				interval=15,
@@ -260,6 +265,19 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 		elif event == Events.PRINT_PAUSED:
 			with self._periodic_updates_lock:
 				self._next_message = None
+
+			if not self._settings.get(["printPaused", "enable"]):
+				return
+
+			path = payload["name"]
+
+			placeholders = dict(file=path)
+
+			title = self._settings.get(["printPaused", "title"]).format(**placeholders)
+			body = self._settings.get(["printPaused", "body"]).format(**placeholders)
+			filename = os.path.splitext(path)[0] + "-paused.jpg"
+
+			self._send_message_with_webcam_image(title, body, filename=filename)
 
 		elif event == Events.PRINT_STARTED or event == Events.PRINT_RESUMED:
 			if self._periodic_updates:

@@ -71,6 +71,41 @@
     </fieldset>
 
     <fieldset>
+        <legend>{{ _('Messages on print pause') }}</legend>
+
+        <div class="control-group">
+            <div class="controls">
+                <label class="checkbox">
+                    <input type="checkbox" data-bind="checked: settings.settings.plugins.octobullet.printPaused.enable">{{ _('Enable notification') }}
+                </label>
+            </div>
+        </div>
+
+        <div class="control-group" data-bind="visible: settings.settings.plugins.octobullet.printPaused.enable">
+            <label class="control-label">{{ _('Message title') }}</label>
+            <div class="controls">
+                <input type="text" class="input-block-level" data-bind="value: settings.settings.plugins.octobullet.printPaused.title">
+            </div>
+        </div>
+
+        <div class="control-group" data-bind="visible: settings.settings.plugins.octobullet.printPaused.enable">
+            <label class="control-label">{{ _('Message body') }}</label>
+            <div class="controls">
+                <textarea rows="4" class="block" data-bind="value: settings.settings.plugins.octobullet.printPaused.body"></textarea>
+            </div>
+        </div>
+
+        <div class="control-group" data-bind="visible: settings.settings.plugins.octobullet.printPaused.enable">
+            <div class="controls">
+                <span class="help-block">{% trans %}
+                    Available placeholders: <code>{file}</code> - printed file
+                {% endtrans %}</span>
+            </div>
+        </div>
+
+    </fieldset>
+
+    <fieldset>
         <legend>{{ _('Messages on print progress') }}</legend>
 
         <div class="control-group">
