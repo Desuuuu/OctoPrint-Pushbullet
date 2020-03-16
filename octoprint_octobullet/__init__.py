@@ -127,8 +127,8 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 	def on_after_startup(self):
 		self._connect_bullet(self._settings.get(["access_token"]),
 		                     self._settings.get(["push_channel"]))
-		self._periodic_updates = self._settings.get(["periodic_updates"])
-		self._periodic_updates_interval = self._settings.get_int(["periodic_updates_interval"]) * 60
+		self._periodic_updates = self._settings.get(["printProgress", "enable"])
+		self._periodic_updates_interval = self._settings.get_int(["printProgress", "interval"]) * 60
 
 	#~~ SettingsPlugin
 
@@ -144,12 +144,12 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 		return data
 
 	def on_settings_save(self, data):
-		if "periodic_updates_interval" in data:
+		if "printProgress" in data and "interval" in data["printProgress"]:
 			try:
-				data["periodic_updates_interval"] = int(data["periodic_updates_interval"])
+				data["printProgress"]["interval"] = int(data["printProgress"]["interval"])
 			except:
-				self._logger.exception("Got an invalid value to save for periodic_updates_interval, ignoring it")
-				del data["periodic_updates_interval"]
+				self._logger.exception("Got an invalid value to save for printProgress:interval, ignoring it")
+				del data["printProgress"]["interval"]
 
 		if "access_token" in data and not data["access_token"]:
 			data["access_token"] = None
@@ -167,8 +167,8 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 
 		with self._periodic_updates_lock:
 			# Periodic update settings
-			self._periodic_updates = self._settings.get(["periodic_updates"])
-			self._periodic_updates_interval = self._settings.get_int(["periodic_updates_interval"]) * 60
+			self._periodic_updates = self._settings.get(["printProgress", "enable"])
+			self._periodic_updates_interval = self._settings.get_int(["printProgress", "interval"]) * 60
 
 			# Changing settings mid-print resets the timer
 			if self._next_message is not None:
@@ -179,13 +179,13 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 		return dict(
 			access_token=None,
 			push_channel=None,
-			periodic_updates = False,
-			periodic_updates_interval = 15,
 			printDone=dict(
 				title="Print job finished",
 				body="{file} finished printing in {elapsed_time}"
 			),
 			printProgress=dict(
+				enable=False,
+				interval=15,
 				title="Print job {progress}% complete",
 				body="{progress}% on {file}\nTime elapsed: {elapsed_time}\nTime left: {remaining_time}\nETA: {eta}"
 			)

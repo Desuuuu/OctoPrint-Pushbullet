@@ -68,7 +68,7 @@
         <div class="control-group">
             <div class="controls">
                 <label class="checkbox">
-                    <input type="checkbox" data-bind="checked: settings.settings.plugins.octobullet.periodic_updates">{{ _('Enable periodic updates') }}
+                    <input type="checkbox" data-bind="checked: settings.settings.plugins.octobullet.printProgress.enable">{{ _('Enable periodic updates') }}
                 </label>
                 <span class="help-block"><span class="label label-warning">{{ _('Warning') }}</span>{% trans %}
                     Be aware of the <a href="https://docs.pushbullet.com/#push-limit" target="_blank">monthly message limit</a>
@@ -77,11 +77,11 @@
             </div>
         </div>
 
-        <div class="control-group" data-bind="visible: settings.settings.plugins.octobullet.periodic_updates">
+        <div class="control-group" data-bind="visible: settings.settings.plugins.octobullet.printProgress.enable">
             <label class="control-label">{{ _('Update interval') }}</label>
             <div class="controls">
                 <div class="input-append">
-                    <input type="number" class="input-mini" min="1" data-bind="value: settings.settings.plugins.octobullet.periodic_updates_interval">
+                    <input type="number" class="input-mini" min="1" data-bind="value: settings.settings.plugins.octobullet.printProgress.interval">
                     <span class="add-on">min</span>
                 </div>
                 <span class="help-block">{% trans %}
@@ -93,21 +93,21 @@
             </div>
         </div>
 
-        <div class="control-group" data-bind="visible: settings.settings.plugins.octobullet.periodic_updates">
+        <div class="control-group" data-bind="visible: settings.settings.plugins.octobullet.printProgress.enable">
             <label class="control-label">{{ _('Message title') }}</label>
             <div class="controls">
                 <input type="text" class="input-block-level" data-bind="value: settings.settings.plugins.octobullet.printProgress.title">
             </div>
         </div>
 
-        <div class="control-group" data-bind="visible: settings.settings.plugins.octobullet.periodic_updates">
+        <div class="control-group" data-bind="visible: settings.settings.plugins.octobullet.printProgress.enable">
             <label class="control-label">{{ _('Message body') }}</label>
             <div class="controls">
                 <textarea rows="4" class="block" data-bind="value: settings.settings.plugins.octobullet.printProgress.body"></textarea>
             </div>
         </div>
 
-        <div class="control-group" data-bind="visible: settings.settings.plugins.octobullet.periodic_updates">
+        <div class="control-group" data-bind="visible: settings.settings.plugins.octobullet.printProgress.enable">
             <div class="controls">
                 <span class="help-block">{% trans %}
                     Available placeholders: <code>{file}</code> - printed file, <code>{elapsed_time}</code> - duration of the print so far,
