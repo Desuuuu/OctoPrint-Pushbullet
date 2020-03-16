@@ -179,6 +179,10 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 		return dict(
 			access_token=None,
 			push_channel=None,
+			actionTrigger=dict(
+				enable=True,
+				title="Print notification"
+			),
 			printDone=dict(
 				enable=True,
 				title="Print job finished",
@@ -472,6 +476,22 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 			                                                      p.stdout.text,
 			                                                      p.stderr.text))
 
+	def action_handler(self, comm, line, action, *args, **kwargs):
+		if not self._settings.get_boolean(["actionTrigger", "enable"]):
+			return
+
+		if not action.startswith("pushbullet "):
+			return
+
+		text = action[11:].strip()
+
+		if not text:
+			return
+
+		title = self._settings.get(["actionTrigger", "title"])
+
+		self._send_message_with_webcam_image(title, text, filename="webcam-snapshot.jpg")
+
 
 class NoSuchChannel(Exception):
 	def __init__(self, channel, *args, **kwargs):
@@ -488,6 +508,7 @@ def __plugin_load__():
 
 	global __plugin_hooks__
 	__plugin_hooks__ = {
+		"octoprint.comm.protocol.action": __plugin_implementation__.action_handler,
 		"octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
 	}
 

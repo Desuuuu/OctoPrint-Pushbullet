@@ -36,6 +36,30 @@
     </fieldset>
 
     <fieldset>
+        <legend>{{ _('Action trigger') }}</legend>
+
+        <div class="control-group">
+            <div class="controls">
+                <label class="checkbox">
+                    <input type="checkbox" data-bind="checked: settings.settings.plugins.octobullet.actionTrigger.enable">{{ _('Enable trigger') }}
+                </label>
+                <span class="help-block">{% trans %}
+                    This will send a notification through Pushbullet when <code>action:pushbullet</code> is received.
+                    The action text will be used a the body of the notification.
+                {% endtrans %}</span>
+            </div>
+        </div>
+
+        <div class="control-group" data-bind="visible: settings.settings.plugins.octobullet.actionTrigger.enable">
+            <label class="control-label">{{ _('Message title') }}</label>
+            <div class="controls">
+                <input type="text" class="input-block-level" data-bind="value: settings.settings.plugins.octobullet.actionTrigger.title">
+            </div>
+        </div>
+
+    </fieldset>
+
+    <fieldset>
         <legend>{{ _('Messages on print completion') }}</legend>
 
         <div class="control-group">
