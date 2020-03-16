@@ -1,9 +1,3 @@
-**⚠ Up for adoption! ⚠**
-
-I have my hands way too full with OctoPrint's maintenance to give this plugin the attention it needs. Hence I'm looking for a new maintainer to adopt it. [Please get in touch here](https://github.com/OctoPrint/OctoPrint-Pushbullet/issues/24).
-
----
-
 **HEADS-UP: Needs OctoPrint 1.2.4 or later!**
 
 # OctoPrint Pushbullet Plugin
@@ -19,10 +13,10 @@ of the print result will be captured and included in the notification.
 
 ## Installation
 
-Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager) 
+Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager)
 or manually using this URL:
 
-    https://github.com/OctoPrint/OctoPrint-Pushbullet/archive/master.zip
+    https://github.com/Desuuuu/OctoPrint-Pushbullet/archive/master.zip
 
 ## Configuration
 
@@ -41,17 +35,31 @@ plugins:
 
     # Pushbullet Channel Tag to use for messages, may be left empty/null
     push_channel: some_tag
-    
+
     # message to send when a print is done
     # available placeholders:
     # - file: name of the file that was printed
     # - elapsed_time: duration of the print, format "[{days}d ]{hours}h {minutes}min"
     printDone:
+      enable: true
+
       # title of the notification
       title: 'Print job finished'
-      
+
       # body of the notification
       body: '{file} finished printing in {elapsed_time}'
+
+    # message to send when a print is paused
+    # available placeholders:
+    # - file: name of the file that is being printed
+    printPaused:
+      enable: true
+
+      # title of the notification
+      title: 'Print job paused'
+
+      # body of the notification
+      body: 'Paused printing {file}'
 
     # message to send for regular progress messages
     # available placeholders:
@@ -61,6 +69,11 @@ plugins:
     # - remaining_time: expected remaining duration of the print, format "[{days}d ]{hours}h {minutes}min"
     # - eta: expected finish time of the print, format "[{year}-{month}-{day} ]{hour}:{minute}"
     printProgress:
+      enable: true
+
+      # time between notifications (in minutes)
+      interval: 15
+
       # title of the notification
       title: 'Print job {progress}% complete'
 
