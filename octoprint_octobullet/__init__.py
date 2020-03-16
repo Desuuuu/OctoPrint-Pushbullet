@@ -180,6 +180,7 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 			access_token=None,
 			push_channel=None,
 			printDone=dict(
+				enable=True,
 				title="Print job finished",
 				body="{file} finished printing in {elapsed_time}"
 			),
@@ -238,6 +239,12 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 	def on_event(self, event, payload):
 
 		if event == Events.PRINT_DONE:
+			with self._periodic_updates_lock:
+				self._next_message = None
+
+			if not self._settings.get(["printDone", "enable"]):
+				return
+
 			path = os.path.basename(payload["file"])
 			elapsed_time_in_seconds = payload["time"]
 
@@ -249,9 +256,6 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 			filename = os.path.splitext(path)[0] + "-done.jpg"
 
 			self._send_message_with_webcam_image(title, body, filename=filename)
-
-			with self._periodic_updates_lock:
-				self._next_message = None
 
 		elif event == Events.PRINT_STARTED:
 			if self._periodic_updates:
