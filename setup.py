@@ -21,13 +21,13 @@ plugin_version = "0.1.9"
 plugin_description = """Pushes notifications about finished print jobs via Pushbullet."""
 
 # The plugin's author. Can be overwritten within OctoPrint's internal data via __plugin_author__ in the plugin module
-plugin_author = "Gina Häußge"
+plugin_author = "Desuuuu / Gina Häußge"
 
 # The plugin's author's mail address.
-plugin_author_email = "gina@octoprint.org"
+plugin_author_email = "contact@desuuuu.com"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
-plugin_url = "https://github.com/OctoPrint/OctoPrint-Pushbullet"
+plugin_url = "https://github.com/Desuuuu/OctoPrint-Pushbullet"
 
 # The plugin's license. Can be overwritten within OctoPrint's internal data via __plugin_license__ in the plugin module
 plugin_license = "AGPLv3"

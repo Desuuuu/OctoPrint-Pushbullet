@@ -295,12 +295,12 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 
 				# version check: github repository
 				type="github_release",
-				user="OctoPrint",
+				user="Desuuuu",
 				repo="OctoPrint-Pushbullet",
 				current=self._plugin_version,
 
 				# update method: pip
-				pip="https://github.com/OctoPrint/OctoPrint-Pushbullet/archive/{target_version}.zip"
+				pip="https://github.com/Desuuuu/OctoPrint-Pushbullet/archive/{target_version}.zip"
 			)
 		)
 
