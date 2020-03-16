@@ -420,7 +420,7 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 		vflip  = self._settings.global_get_boolean(["webcam", "flipV"])
 		rotate = self._settings.global_get_boolean(["webcam", "rotate90"])
 		ffmpeg = self._settings.global_get(["webcam", "ffmpeg"])
-		
+
 		if not ffmpeg or not os.access(ffmpeg, os.X_OK) or (not vflip and not hflip and not rotate):
 			return
 
@@ -454,6 +454,8 @@ class NoSuchChannel(Exception):
 
 
 __plugin_name__ = "Pushbullet"
+__plugin_pythoncompat__ = ">=2.7,<4"
+
 def __plugin_load__():
 	global __plugin_implementation__
 	__plugin_implementation__ = PushbulletPlugin()
