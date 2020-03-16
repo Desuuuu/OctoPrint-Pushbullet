@@ -127,7 +127,7 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 	def on_after_startup(self):
 		self._connect_bullet(self._settings.get(["access_token"]),
 		                     self._settings.get(["push_channel"]))
-		self._periodic_updates = self._settings.get(["printProgress", "enable"])
+		self._periodic_updates = self._settings.get_boolean(["printProgress", "enable"])
 		self._periodic_updates_interval = self._settings.get_int(["printProgress", "interval"]) * 60
 
 	#~~ SettingsPlugin
@@ -167,7 +167,7 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 
 		with self._periodic_updates_lock:
 			# Periodic update settings
-			self._periodic_updates = self._settings.get(["printProgress", "enable"])
+			self._periodic_updates = self._settings.get_boolean(["printProgress", "enable"])
 			self._periodic_updates_interval = self._settings.get_int(["printProgress", "interval"]) * 60
 
 			# Changing settings mid-print resets the timer
@@ -247,7 +247,7 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 			with self._periodic_updates_lock:
 				self._next_message = None
 
-			if not self._settings.get(["printDone", "enable"]):
+			if not self._settings.get_boolean(["printDone", "enable"]):
 				return
 
 			path = payload["name"]
@@ -266,7 +266,7 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 			with self._periodic_updates_lock:
 				self._next_message = None
 
-			if not self._settings.get(["printPaused", "enable"]):
+			if not self._settings.get_boolean(["printPaused", "enable"]):
 				return
 
 			path = payload["name"]
