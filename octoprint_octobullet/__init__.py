@@ -257,7 +257,11 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 
 			self._send_message_with_webcam_image(title, body, filename=filename)
 
-		elif event == Events.PRINT_STARTED:
+		elif event == Events.PRINT_PAUSED:
+			with self._periodic_updates_lock:
+				self._next_message = None
+
+		elif event == Events.PRINT_STARTED or event == Events.PRINT_RESUMED:
 			if self._periodic_updates:
 				with self._periodic_updates_lock:
 					self._next_message = time.time() + self._periodic_updates_interval
