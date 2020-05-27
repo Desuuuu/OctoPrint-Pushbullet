@@ -13,7 +13,7 @@ import octoprint.plugin
 
 from octoprint.events import Events
 from octoprint.server import admin_permission
-from flask.ext.login import current_user
+from flask_login import current_user
 
 import pushbullet
 import flask
@@ -138,7 +138,7 @@ class PushbulletPlugin(octoprint.plugin.EventHandlerPlugin,
 		# only return our restricted settings to admin users - this is only needed for OctoPrint <= 1.2.16
 		restricted = ("access_token", "push_channel")
 		for r in restricted:
-			if r in data and (current_user is None or current_user.is_anonymous() or not current_user.is_admin()):
+			if r in data and (current_user is None or current_user.is_anonymous or not current_user.is_admin):
 				data[r] = None
 
 		return data
